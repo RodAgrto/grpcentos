@@ -42,7 +42,7 @@ RUN cd grpc \
     && mkdir -p cmake/build \
     && pushd cmake/build \
     && cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=${GRPC_DIR} ../.. \
-    && make -j 4 \
+    && make \
     && make install  \
     && popd
 # Clean
