@@ -25,8 +25,13 @@ RUN echo 'export GOPATH=${GOPATH}'>>/etc/profile
 RUN echo 'export GOBIN=${GOBIN}'>>/etc/profile
 RUN echo 'export PATH=${PATH}'>>/etc/profile
 RUN go version
-RUN go get -u google.golang.org/grpc github.com/golang/protobuf/protoc-gen-go github.com/go-delve/delve/cmd/dlv
-RUN go get -u github.com/stretchr/testify go.mongodb.org/mongo-driver/mongo github.com/gorilla/mux
+RUN go get -u -v \
+      google.golang.org/grpc \
+      github.com/golang/protobuf/protoc-gen-go \
+      github.com/go-delve/delve/cmd/dlv \
+      github.com/stretchr/testify \
+      go.mongodb.org/mongo-driver/mongo \
+      github.com/gorilla/mux
 
 # GRPC C++ 
 ENV GRPC_DIR=/usr/local/local
@@ -44,5 +49,9 @@ RUN cd grpc \
 RUN rm -rf grpc
 
 # GRPC Java
-RUN git clone -b v1.29.0 https://github.com/grpc/grpc-java.git
-RUN cd 
+RUN cd #; git clone -b v${GRPC_VERSION} https://github.com/grpc/grpc-java.git
+
+# GRPC python
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install grpcio
+RUN python3 -m pip install grpcio-tools
