@@ -6,4 +6,4 @@
 - python3
 - gcc 8
 
-GRPC with all these languages as well
+GRPC with all these languages.
