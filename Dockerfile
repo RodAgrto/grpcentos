@@ -1,5 +1,6 @@
 FROM centos:8
 
+ARG       MAKE_J=6
 ARG   GO_VERSION=1.14.3
 ARG GRPC_VERSION=1.28.1
 
@@ -34,15 +35,15 @@ RUN go get -u -v \
       github.com/gorilla/mux
 
 # GRPC C++ 
-ENV GRPC_DIR=/usr/local/local
+ENV GRPC_DIR=/usr/local/grpc
 RUN echo 'export PATH="${PATH}:${GRPC_DIR}/bin'>>/etc/profile
-RUN mkdir -p ${GRPC_DIR} ;
+RUN mkdir -p ${GRPC_DIR};
 RUN git clone --recurse-submodules -b v${GRPC_VERSION} https://github.com/grpc/grpc
 RUN cd grpc \
     && mkdir -p cmake/build \
     && pushd cmake/build \
     && cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=${GRPC_DIR} ../.. \
-    && make -j 4 \
+    && make -j ${MAKE_J} \
     && make install  \
     && popd
 # Clean
