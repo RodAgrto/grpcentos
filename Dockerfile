@@ -30,7 +30,8 @@ RUN go get -u -v \
       go.mongodb.org/mongo-driver/mongo \
       github.com/gorilla/mux
 
-# GRPC C++ 
+# GRPC C++
+
 ENV GRPC_DIR=/usr/local/grpc
 ENV PATH=${GRPC_DIR}:${GRPC_DIR}/bin:${PATH}
 RUN mkdir -p ${GRPC_DIR};
