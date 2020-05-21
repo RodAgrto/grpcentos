@@ -21,10 +21,6 @@ ENV GOROOT=/usr/local/go
 ENV GOPATH=${HOME}/go
 ENV GOBIN=${GOPATH}/bin
 ENV PATH=${GOPATH}/bin:${GOROOT}/bin:{$PATH}
-RUN echo 'export GOROOT=${GOROOT}' >>/etc/profile 
-RUN echo 'export GOPATH=${GOPATH}'>>/etc/profile
-RUN echo 'export GOBIN=${GOBIN}'>>/etc/profile
-RUN echo 'export PATH=${PATH}'>>/etc/profile
 RUN go version
 RUN go get -u -v \
       google.golang.org/grpc \
@@ -36,7 +32,7 @@ RUN go get -u -v \
 
 # GRPC C++ 
 ENV GRPC_DIR=/usr/local/grpc
-RUN echo 'export PATH="${PATH}:${GRPC_DIR}/bin'>>/etc/profile
+ENV PATH=${GRPC_DIR}:${GRPC_DIR}/bin:${PATH}
 RUN mkdir -p ${GRPC_DIR};
 RUN git clone --recurse-submodules -b v${GRPC_VERSION} https://github.com/grpc/grpc
 RUN cd grpc \
